@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Spotify Login</title>
+</head>
+<body>
+    {% if is_authenticated %}
+        <h1>Welcome, {{ username }}!</h1>
+        <p>You are logged in with Spotify</p>
+    {% else %}
+        <a href="{% url 'spotify_login' %}">Login with Spotify</a>
+    {% endif %}
+</body>
+</html> 

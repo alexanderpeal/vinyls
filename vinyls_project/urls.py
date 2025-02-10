@@ -16,9 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from vinyls_app.views import hello_world
+from vinyls_app.views import home, spotify_login, spotify_callback
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', hello_world),
+    path('', home, name='home'),
+    path('spotify/login/', spotify_login, name='spotify_login'),
+    path('spotify/callback/', spotify_callback, name='spotify_callback'),
 ]
