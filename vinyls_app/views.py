@@ -25,16 +25,31 @@ def spotify_callback(request):
     
     return HttpResponse("No code received from Spotify")
 
-# Create your views here.
+# --- Views for app below ---
+
 def home(request):
     token_info = request.session.get('spotify_token')
     
+    # If authenticated, render home.html
     if token_info and 'access_token' in token_info:
-        # Get user profile if authenticated
         user_profile = SpotifyAuth.get_user_profile(token_info['access_token'])
-        return render(request, 'home.html', {
-            'is_authenticated': True,
-            'username': user_profile.get('display_name', 'Unknown User')
-        })
+        
+        profile_image_url = None
+        if user_profile.get('images'):
+            profile_image_url = user_profile['images'][0]['url']
+        
+        context = {
+            'username': user_profile.get('display_name', 'Unknown User'),
+            'profile_image_url': profile_image_url
+        }
+        
+        return render(request, 'home.html', context)
     
-    return render(request, 'home.html', {'is_authenticated': False})
+    # Otherwise, render landing.html
+    return render(request, 'landing.html')
+
+def logout_view(request):
+    if 'spotify_token' in request.session:
+        del request.session['spotify_token']
+    
+    return redirect('/')
