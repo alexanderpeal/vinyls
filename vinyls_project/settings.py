@@ -11,6 +11,24 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Verify environment variables are loaded
+SPOTIFY_CLIENT_ID = os.getenv('SPOTIFY_CLIENT_ID')
+if not SPOTIFY_CLIENT_ID:
+    raise ValueError("SPOTIFY_CLIENT_ID not found in environment variables")
+
+SPOTIFY_CLIENT_SECRET = os.getenv('SPOTIFY_CLIENT_SECRET')
+if not SPOTIFY_CLIENT_SECRET:
+    raise ValueError("SPOTIFY_CLIENT_SECRET not found in environment variables")
+
+SPOTIFY_REDIRECT_URI = os.getenv('SPOTIFY_REDIRECT_URI')
+if not SPOTIFY_REDIRECT_URI:
+    raise ValueError("SPOTIFY_REDIRECT_URI not found in environment variables")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -122,3 +140,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Add these settings
+SPOTIFY_CLIENT_ID = os.getenv('SPOTIFY_CLIENT_ID')
+SPOTIFY_CLIENT_SECRET = os.getenv('SPOTIFY_CLIENT_SECRET')
+SPOTIFY_REDIRECT_URI = os.getenv('SPOTIFY_REDIRECT_URI')
+
